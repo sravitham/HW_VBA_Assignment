@@ -1,0 +1,59 @@
+Sub stockdata()
+
+For Each ws In Worksheets
+
+LastRow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+
+  Dim Yearly_Change As Double
+  
+  Dim open_first As Double
+  
+  Dim close_last As Double
+
+  Dim ticker As String
+
+  Dim volume_Total As Double
+  volume_Total = 0
+
+  Dim Summary_Table_Row As Integer
+  Summary_Table_Row = 2
+
+  For i = 2 To LastRow
+
+    If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
+
+      ticker = ws.Cells(i, 1).Value
+
+      volume_Total = volume_Total + ws.Cells(i, 7).Value
+
+      ws.Range("I" & Summary_Table_Row).Value = ticker
+
+      ws.Range("L" & Summary_Table_Row).Value = volume_Total
+      
+      ws.Range("J" & Summary_Table_Row).Value = Yearly_Change
+
+      Summary_Table_Row = Summary_Table_Row + 1
+      
+      volume_Total = 0
+      
+      open_first = ws.Cells(i + 1, 3).Value
+      
+      close_last = ws.Cells(i, 6).Value
+      
+            Yearly_Change = ws.Cells(i, 3).Value - close_last
+    Else
+
+      volume_Total = volume_Total + ws.Cells(i, 7).Value
+      
+
+    End If
+
+ 
+ Next i
+
+Next ws
+
+End Sub
+
+
